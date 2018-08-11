@@ -1,7 +1,7 @@
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
-  .BundleAnalyzerPlugin
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+// .BundleAnalyzerPlugin
 
 module.exports = {
   mode: process.env.NODE_ENV,
@@ -17,7 +17,7 @@ module.exports = {
     path: path.resolve(__dirname, 'lib'),
     libraryTarget: 'umd',
   },
-  plugins: [new BundleAnalyzerPlugin()],
+  // plugins: [new BundleAnalyzerPlugin()],
   module: {
     rules: [
       {

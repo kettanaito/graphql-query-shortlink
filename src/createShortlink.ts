@@ -12,24 +12,22 @@ export default function createShortlink(
 ) {
   const { graphqlUrl, inspectorUrl, reportQuery } = options
 
-  return (req, res, next) => {
+  return (request, response, next) => {
     const {
       headers: { host },
       body: { query, variables },
-    } = req
+    } = request
 
     const queryString = createQueryString({
       query,
       variables: JSON.stringify(variables),
     })
 
-    const queryHash = objectHash.sha1({ query, variables })
+    const queryHash = objectHash.MD5({ query, variables })
     queryLog[queryHash] = `http://${host}${graphqlUrl}?${queryString}`
 
     const queryShortlink = `http://${host}${inspectorUrl}?id=${queryHash}`
     reportQuery(queryShortlink)
-
-    res.locals.queryLog = queryLog
 
     return next()
   }

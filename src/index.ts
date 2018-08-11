@@ -3,16 +3,16 @@ import createShortlink from './createShortlink'
 import parseShortlink from './parseShortlink'
 
 export type TGraphQLDebuggerOptions = {
-  graphqlUrl: string
   inspectorUrl: string
-  reportQuery: (queryShortlink: string) => void
+  graphqlUrl?: string
+  reportQuery?: (shortlink: string) => void
 }
 
 const defaultOptions: TGraphQLDebuggerOptions = {
   graphqlUrl: '/graphql',
   inspectorUrl: '/goto',
-  reportQuery: (queryShortlink) =>
-    console.log(`Received query, inspect: ${queryShortlink}`),
+  reportQuery: (shortlink) =>
+    console.log(`Received query, inspect: ${shortlink}`),
 }
 
 export default function graphqlQueryShortlink(

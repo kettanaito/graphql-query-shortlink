@@ -5,14 +5,14 @@ export default function parseShortlink(
   queryLog: TQueryLog,
   options: TGraphQLDebuggerOptions,
 ) {
-  return (req, res) => {
-    const { id: queryId } = req.query
+  return (request, response) => {
+    const { id: queryId } = request.query
     const queryUrl = queryLog[queryId]
 
     if (!queryUrl) {
-      return res.sendStatus(404).end()
+      return response.sendStatus(404).end()
     }
 
-    return res.redirect(queryUrl)
+    return response.redirect(queryUrl)
   }
 }
