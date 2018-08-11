@@ -42,6 +42,38 @@ app.use('/graphql', graphqlHTTP({
 app.listen(3001)
 ```
 
+## API
+
+### `graphqlUrl: string`
+
+**Default:** `/graphql`
+
+A relaive URL to the GraphQL endpoint.
+
+---
+
+### `inspectorUrl: string`
+
+**Default:** `/goto`
+
+A relative URL of the generated query shortlink.
+
+---
+
+### `reportQuery: (shortlink: string) => void`
+
+**Default:**
+
+```js
+graphqlQueryShortlink(app, {
+  reportQuery(shortlink) {
+    console.log(`Inspect the query: ${shortlink}`)
+  },
+})
+```
+
+A custom reporter function used for logging the shortlinks into the console.
+
 ## Materials
 
 - [Debugging complex GraphQL queries with shortlinks to GraphiQL](https://nilsnh.no/2018/08/04/debugging-complex-graphql-queries-with-shortlinks-to-graphiql)
