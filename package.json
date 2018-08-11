@@ -1,7 +1,7 @@
 {
   "name": "graphql-query-shortlink",
   "version": "1.0.0",
-  "description": "Express middleware to generate GraphQL queries shortlinks for debugging.",
+  "description": "Express middleware to generate GraphQL queries shortlinks to GraphiQL.",
   "main": "lib/index.js",
   "scripts": {
     "start": "NODE_ENV=development webpack --watch",
