@@ -4,8 +4,8 @@ import parseShortlink from './parseShortlink'
 
 export type TGraphQLDebuggerOptions = {
   inspectorUrl: string
-  graphqlUrl?: string
-  reportQuery?: (shortlink: string) => void
+  graphqlUrl: string
+  reportQuery: (shortlink: string) => void
 }
 
 const defaultOptions: TGraphQLDebuggerOptions = {
@@ -24,10 +24,10 @@ export default function graphqlQueryShortlink(
     ...options,
   }
 
-  const queryLog = {}
+  app.locals.queryLog = {}
 
-  app.use(options.graphqlUrl, createShortlink(queryLog, mergedOptions))
-  app.use(options.inspectorUrl, parseShortlink(queryLog, mergedOptions))
+  app.use(options.graphqlUrl, createShortlink(mergedOptions))
+  app.use(options.inspectorUrl, parseShortlink(mergedOptions))
 
   return app
 }

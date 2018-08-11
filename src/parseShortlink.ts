@@ -1,12 +1,13 @@
 import { TQueryLog } from './createShortlink'
 import { TGraphQLDebuggerOptions } from '.'
 
-export default function parseShortlink(
-  queryLog: TQueryLog,
-  options: TGraphQLDebuggerOptions,
-) {
+export default function parseShortlink(options: TGraphQLDebuggerOptions) {
   return (request, response) => {
     const { id: queryId } = request.query
+    const {
+      locals: { queryLog },
+    } = response.app
+
     const queryUrl = queryLog[queryId]
 
     if (!queryUrl) {

@@ -6,10 +6,7 @@ export type TQueryLog = {
   [queryHash: string]: string
 }
 
-export default function createShortlink(
-  queryLog: TQueryLog,
-  options: TGraphQLDebuggerOptions,
-) {
+export default function createShortlink(options: TGraphQLDebuggerOptions) {
   const { graphqlUrl, inspectorUrl, reportQuery } = options
 
   return (request, response, next) => {
@@ -17,6 +14,9 @@ export default function createShortlink(
       headers: { host },
       body: { query, variables },
     } = request
+    const {
+      locals: { queryLog },
+    } = response.app
 
     const queryString = createQueryString({
       query,
