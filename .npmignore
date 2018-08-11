@@ -1,0 +1,11 @@
+example
+src
+test
+
+.babelrc
+.gitignore
+.npmignore
+.prettierrc
+tsconfig.json
+jest.*
+webpack.*
