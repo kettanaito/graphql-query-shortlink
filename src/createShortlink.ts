@@ -1,28 +1,32 @@
-import url from 'url'
-import createHash from 'object-hash'
+import * as objectHash from 'object-hash'
 import { TGraphQLDebuggerOptions } from '.'
+import createQueryString from './createQueryString'
 
 export type TQueryLog = {
-  [queryId: string]: string
+  [queryHash: string]: string
 }
 
-export default function createShortlink(options: TGraphQLDebuggerOptions) {
+export default function createShortlink(
+  queryLog: TQueryLog,
+  options: TGraphQLDebuggerOptions,
+) {
   const { graphqlUrl, inspectorUrl, reportQuery } = options
 
   return (req, res, next) => {
-    const queryLog: TQueryLog = {}
-    const { query, variables } = req.body
-    const queryString = url.format({
-      query: {
-        query,
-        variables,
-      },
+    const {
+      headers: { host },
+      body: { query, variables },
+    } = req
+
+    const queryString = createQueryString({
+      query,
+      variables: JSON.stringify(variables),
     })
 
-    const queryId = createHash({ query, variables })
-    queryLog[queryId] = `http://localhost:abcd${graphqlUrl}?${queryString}`
+    const queryHash = objectHash.sha1({ query, variables })
+    queryLog[queryHash] = `http://${host}${graphqlUrl}?${queryString}`
 
-    const queryShortlink = `http://localhost:abcd${inspectorUrl}?id=${queryId}`
+    const queryShortlink = `http://${host}${inspectorUrl}?id=${queryHash}`
     reportQuery(queryShortlink)
 
     res.locals.queryLog = queryLog

@@ -1,16 +1,23 @@
 const path = require('path')
+const nodeExternals = require('webpack-node-externals')
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+  .BundleAnalyzerPlugin
 
 module.exports = {
   mode: process.env.NODE_ENV,
   target: 'node',
-  entry: path.resolve(__dirname, 'src/index'),
-  externals: {
-    Express: 'express',
-  },
+  entry: path.resolve(__dirname, 'src/index.ts'),
+  externals: [
+    nodeExternals({
+      whitelist: ['url', 'object-hash'],
+    }),
+  ],
   output: {
     filename: 'index.js',
     path: path.resolve(__dirname, 'lib'),
+    libraryTarget: 'umd',
   },
+  plugins: [new BundleAnalyzerPlugin()],
   module: {
     rules: [
       {

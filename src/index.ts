@@ -12,7 +12,7 @@ const defaultOptions: TGraphQLDebuggerOptions = {
   graphqlUrl: '/graphql',
   inspectorUrl: '/goto',
   reportQuery: (queryShortlink) =>
-    console.log(`Query, inspect: ${queryShortlink}`),
+    console.log(`Received query, inspect: ${queryShortlink}`),
 }
 
 export default function graphqlQueryShortlink(
@@ -24,8 +24,10 @@ export default function graphqlQueryShortlink(
     ...options,
   }
 
-  app.use(options.graphqlUrl, createShortlink(options))
-  app.use(options.inspectorUrl, parseShortlink(options))
+  const queryLog = {}
+
+  app.use(options.graphqlUrl, createShortlink(queryLog, mergedOptions))
+  app.use(options.inspectorUrl, parseShortlink(queryLog, mergedOptions))
 
   return app
 }
